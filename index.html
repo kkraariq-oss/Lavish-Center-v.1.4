@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="LaVish Center - متجر الأزياء الراقية - أفضل الأسعار وأحدث الموديلات">
+    <meta name="theme-color" content="#ff6b9d">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="LaVish Center">
+    <title>LaVish Center - Premium Fashion Store</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="./manifest.json">
+    
+    <!-- Icons -->
+    <link rel="icon" type="image/svg+xml" href="./icon.svg">
+    <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="./icon-512.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="./icon-192.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="./icon-144.png">
+    
+    <!-- Bootstrap RTL CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Swiper Slider -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="admin-styles.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-logo">
+            <img src="./icon-192.png" alt="LaVish Center" class="loading-logo-img">
+            <div class="loading-logo-text">
+                <i class="fas fa-gem"></i> LaVish Center
+            </div>
+        </div>
+        <div class="loading-spinner"></div>
+        <div class="loading-countdown" id="loadingCountdown">3</div>
+    </div>
+
+    <!-- Top Ad -->
+    <div class="top-ad">
+        <div class="top-ad-text">
+            <a href="#">🔥 خصم خاص 40% على جميع الفساتين - لفترة محدودة!</a>
+        </div>
+    </div>
+
+    <!-- Popup Ad Overlay -->
+    <div class="popup-ad-overlay" id="popupAdOverlay" style="display: none;">
+        <div class="popup-ad">
+            <button class="popup-ad-close" onclick="closePopupAd()">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="popup-ad-content" onclick="goToAdProduct()">
+                <div class="popup-ad-badge">🔥 عرض خاص</div>
+                <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800" alt="عرض خاص" class="popup-ad-image">
+                <div class="popup-ad-details">
+                    <h3 class="popup-ad-title">فستان سهرة فاخر</h3>
+                    <p class="popup-ad-description">تصميم عصري وأنيق - متوفر بألوان متعددة</p>
+                    <div class="popup-ad-price-container">
+                        <span class="popup-ad-old-price">250,000 د.ع</span>
+                        <span class="popup-ad-new-price">149,900 د.ع</span>
+                    </div>
+                    <button class="popup-ad-cta">
+                        <i class="fas fa-shopping-bag"></i>
+                        اطلب الآن واحصل على خصم 40%
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top Header -->
+    <header class="top-header">
+        <div class="container">
+            <div class="top-header-content">
+                <a href="#" class="brand-logo" data-page="home">
+                    <i class="fas fa-gem"></i>
+                    <span>LaVish</span>
+                </a>
+                
+                <div class="header-actions">
+                    <div class="search-bar">
+                        <input type="text" class="search-input" id="topSearchInput" placeholder="ابحث عن منتج...">
+                        <button class="search-btn" id="topSearchBtn">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    
+                    <button class="header-icon-btn" id="notificationsBtn">
+                        <i class="fas fa-bell"></i>
+                        <span class="header-badge" id="notificationsCount">2</span>
+                    </button>
+                    
+                    <button class="header-icon-btn" id="favoritesBtn">
+                        <i class="fas fa-heart"></i>
+                        <span class="header-badge" id="favoritesCount">0</span>
+                    </button>
+                    
+                    <button class="header-icon-btn" id="cartBtn">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="header-badge" id="cartCount">0</span>
+                    </button>
+                    
+                    <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Sidebar -->
+    <div class="mobile-sidebar" id="mobileSidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-brand">
+                <i class="fas fa-gem"></i>
+                <span>LaVish Center</span>
+            </div>
+            <button class="sidebar-close" onclick="closeSidebar()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="sidebar-menu">
+            <button class="sidebar-menu-item" data-page="home">
+                <i class="fas fa-home"></i>
+                <span>الرئيسية</span>
+            </button>
+            <button class="sidebar-menu-item" data-page="about">
+                <i class="fas fa-info-circle"></i>
+                <span>من نحن</span>
+            </button>
+            <button class="sidebar-menu-item" data-page="notifications">
+                <i class="fas fa-bell"></i>
+                <span>الإشعارات</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Home Page -->
+        <div class="page active" id="homePage">
+            <!-- Categories -->
+            <div class="categories-section">
+                <div class="container">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-th-large"></i>
+                            الأقسام
+                        </h2>
+                    </div>
+                    <div class="category-btns">
+                        <!-- سيتم ملؤها من JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="filters-section">
+                <div class="container">
+                    <div class="filter-btns">
+                        <!-- سيتم ملؤها من JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products -->
+            <div class="products-section">
+                <div class="container">
+                    <div class="products-grid" id="productsGrid">
+                        <!-- سيتم ملؤها من JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Page -->
+        <div class="page" id="aboutPage">
+            <div class="about-section">
+                <div class="container">
+                    <div class="section-header" data-aos="fade-up">
+                        <h2 class="section-title">
+                            <i class="fas fa-gem"></i>
+                            عن LaVish Center
+                        </h2>
+                    </div>
+                    
+                    <div class="about-content" data-aos="fade-up" data-aos-delay="100">
+                        <p>متجر LaVish Center، أحد استثمارات جوهرة سما بابل للاستثمار. نقدم لكم أفضل وأحدث صيحات الموضة التركية الأصلية بأسعار منافسة وجودة عالية.</p>
+                    </div>
+
+                    <div class="about-contact" data-aos="fade-up" data-aos-delay="200">
+                        <h3><i class="fas fa-map-marker-alt"></i> موقعنا</h3>
+                        <div class="contact-info">
+                            <p><i class="fas fa-location-dot"></i> بابل - الهاشمية، شارع حي الديوانية، مقابل محطة وقود صرح بابل</p>
+                            <p><i class="fas fa-phone"></i> <a href="tel:+9647813798636">+964 781 379 8636</a></p>
+                            <p><i class="fab fa-whatsapp"></i> <a href="https://wa.me/9647813798636">+964 781 379 8636</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notifications Page -->
+        <div class="page" id="notificationsPage">
+            <div class="notifications-section">
+                <div class="container">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-bell"></i>
+                            الإشعارات
+                        </h2>
+                    </div>
+                    
+                    <div class="notifications-list" id="notificationsList">
+                        <div class="notification-item unread" data-aos="fade-up">
+                            <div class="notification-icon new">
+                                <i class="fas fa-sparkles"></i>
+                            </div>
+                            <div class="notification-content">
+                                <h4>منتجات جديدة وصلت!</h4>
+                                <p>تشكيلة حصرية من الأزياء التركية الأصلية متوفرة الآن</p>
+                                <span class="notification-time">منذ ساعتين</span>
+                            </div>
+                        </div>
+                        
+                        <div class="notification-item unread" data-aos="fade-up" data-aos-delay="100">
+                            <div class="notification-icon sale">
+                                <i class="fas fa-percent"></i>
+                            </div>
+                            <div class="notification-content">
+                                <h4>خصم 40% على الفساتين!</h4>
+                                <p>عرض لفترة محدودة - لا تفوت الفرصة</p>
+                                <span class="notification-time">منذ 5 ساعات</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>عن LaVish Center</h3>
+                    <p>متجر LaVish Center، أحد استثمارات جوهرة سما بابل للاستثمار. نقدم لكم أفضل وأحدث صيحات الموضة التركية الأصلية بأسعار منافسة وجودة عالية.</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/lavishcenter" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/lavishcenter" target="_blank" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="https://wa.me/9647813798636" target="_blank" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>روابط سريعة</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" data-page="about"><i class="fas fa-angle-left"></i> من نحن</a></li>
+                        <li><a href="#"><i class="fas fa-angle-left"></i> سياسة الخصوصية</a></li>
+                        <li><a href="#"><i class="fas fa-angle-left"></i> اتصل بنا</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>تواصل معنا</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-phone"></i> <a href="tel:+9647813798636">+964 781 379 8636</a></li>
+                        <li><i class="fab fa-whatsapp"></i> <a href="https://wa.me/9647813798636">+964 781 379 8636</a></li>
+                        <li><i class="fas fa-map-marker-alt"></i> بابل - الهاشمية</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 LaVish Center. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top-btn" id="scrollTopBtn">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Install PWA Button -->
+    <button class="install-btn" id="installBtn" style="display: none;">
+        <i class="fas fa-download"></i>
+        <span>تثبيت التطبيق</span>
+    </button>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+
+    <!-- Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <!-- Application Script -->
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 50
+        });
+    </script>
+    <script src="app.js"></script>
+</body>
+</html>
