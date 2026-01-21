@@ -3,48 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#ff6b9d">
-    <meta name="description" content="LaVish Center - متجر الأزياء والإكسسوارات الفاخرة">
+    <title>LaVish Center - Premium Fashion Store</title>
     
-    <title>LaVish Center - متجر الأزياء</title>
-    
-    <!-- Manifest -->
-    <link rel="manifest" href="manifest.json">
-    
-    <!-- Icons -->
-    <link rel="icon" type="image/svg+xml" href="icon.svg">
-    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
-    <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
-    <link rel="apple-touch-icon" href="icon-192.png">
-    
-    <!-- Fonts -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <!-- Styles -->
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="admin-styles.css">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#ff6b9d">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 </head>
 <body>
+    
     <!-- Loading Screen -->
     <div class="loading-screen" id="loadingScreen">
         <div class="loading-logo">
-            <img src="icon.svg" alt="LaVish" class="loading-logo-img">
-            <div class="loading-logo-text">LaVish 💎</div>
+            <img src="icon.svg" alt="LaVish Logo" class="loading-logo-img">
+            <h1 class="loading-logo-text">LaVish 💎</h1>
         </div>
         <div class="loading-spinner"></div>
     </div>
-
+    
     <!-- Top Ad Bar -->
-    <div class="top-ad">
-        <div class="top-ad-text" id="topAdText"></div>
+    <div class="top-ad" id="topAd">
+        <div class="top-ad-text" id="topAdText">
+            <!-- Scrolling ads will be inserted here -->
+        </div>
     </div>
-
-    <!-- Header -->
+    
+    <!-- Top Header -->
     <header class="top-header">
         <div class="container">
             <div class="top-header-content">
@@ -54,12 +54,12 @@
                 
                 <a href="#" class="brand-logo" onclick="navigateToPage('home'); return false;">
                     <i class="fas fa-gem"></i>
-                    <span>LaVish 💎</span>
+                    <span>LaVish</span>
                 </a>
                 
                 <div class="header-actions">
                     <div class="search-bar">
-                        <input type="text" class="search-input" placeholder="ابحث عن منتجات...">
+                        <input type="text" class="search-input" id="searchInput" placeholder="ابحث عن منتج..." onkeyup="searchProducts()">
                         <button class="search-btn">
                             <i class="fas fa-search"></i>
                         </button>
@@ -68,210 +68,288 @@
             </div>
         </div>
     </header>
-
+    
     <!-- Mobile Sidebar -->
-    <div class="mobile-sidebar" id="mobileSidebar">
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+    <aside class="mobile-sidebar" id="mobileSidebar">
         <div class="sidebar-header">
             <div class="sidebar-brand">
                 <i class="fas fa-gem"></i>
-                LaVish 💎
+                <span>LaVish</span>
             </div>
             <button class="sidebar-close" onclick="closeSidebar()">
                 <i class="fas fa-times"></i>
             </button>
         </div>
         
-        <div class="sidebar-menu">
-            <!-- Home -->
+        <nav class="sidebar-menu">
+            <!-- Main Menu -->
             <button class="sidebar-menu-item" onclick="navigateToPage('home'); closeSidebar();">
                 <i class="fas fa-home"></i>
                 <span>الرئيسية</span>
             </button>
             
-            <!-- Categories -->
+            <button class="sidebar-menu-item" onclick="navigateToPage('about'); closeSidebar();">
+                <i class="fas fa-info-circle"></i>
+                <span>من نحن</span>
+            </button>
+            
+            <div class="sidebar-menu-divider"></div>
+            
+            <!-- Categories Section -->
             <div class="sidebar-menu-section">
                 <div class="sidebar-menu-title">
-                    <i class="fas fa-th-large"></i>
+                    <i class="fas fa-th"></i>
                     <span>الأقسام</span>
                 </div>
-                <div id="sidebarCategories"></div>
+                
+                <div id="sidebarCategoriesContainer">
+                    <!-- Categories will be inserted here by JavaScript -->
+                </div>
             </div>
             
-            <!-- Cart -->
-            <button class="sidebar-menu-item" onclick="showCart(); closeSidebar();">
+            <div class="sidebar-menu-divider"></div>
+            
+            <!-- Quick Links -->
+            <button class="sidebar-menu-item" onclick="navigateToPage('cart'); closeSidebar();">
                 <i class="fas fa-shopping-cart"></i>
                 <span>السلة</span>
-                <span class="sidebar-badge" id="sidebarCartBadge" style="display: none;">0</span>
+                <span class="sidebar-badge" id="sidebarCartBadge">0</span>
             </button>
             
-            <!-- Wishlist -->
-            <button class="sidebar-menu-item" onclick="showWishlist(); closeSidebar();">
+            <button class="sidebar-menu-item" onclick="navigateToPage('wishlist'); closeSidebar();">
                 <i class="fas fa-heart"></i>
                 <span>المفضلة</span>
-                <span class="sidebar-badge" id="sidebarWishlistBadge" style="display: none;">0</span>
+                <span class="sidebar-badge" id="sidebarWishlistBadge">0</span>
             </button>
             
-            <!-- Notifications -->
-            <button class="sidebar-menu-item" onclick="showNotifications(); closeSidebar();">
+            <button class="sidebar-menu-item" onclick="navigateToPage('notifications'); closeSidebar();">
                 <i class="fas fa-bell"></i>
                 <span>الإشعارات</span>
             </button>
             
-            <!-- About -->
-            <button class="sidebar-menu-item" onclick="navigateToPage('about'); closeSidebar();">
-                <i class="fas fa-info-circle"></i>
-                <span>عن المتجر</span>
-            </button>
-            
             <!-- Admin Section -->
-            <div class="sidebar-menu-divider"></div>
-            <div class="sidebar-menu-section admin-section">
+            <div class="sidebar-menu-divider" id="adminDivider" style="display: none;"></div>
+            
+            <div class="sidebar-menu-section" id="adminSection" style="display: none;">
                 <div class="sidebar-menu-title">
-                    <i class="fas fa-user-shield"></i>
-                    <span>الإدارة</span>
+                    <i class="fas fa-shield-alt"></i>
+                    <span>لوحة التحكم</span>
                 </div>
                 
-                <!-- Admin Login -->
-                <button class="sidebar-menu-item" id="adminLoginBtn" onclick="showAdminLogin()">
-                    <i class="fas fa-sign-in-alt"></i>
-                    <span>تسجيل دخول المدير</span>
-                </button>
-                
-                <!-- Admin Menu (Hidden until login) -->
-                <button class="sidebar-menu-item admin-menu-item" style="display: none;" onclick="showAddProduct()">
+                <button class="sidebar-menu-item" onclick="showAddProductModal(); closeSidebar();">
                     <i class="fas fa-plus-circle"></i>
                     <span>إضافة منتج</span>
                 </button>
                 
-                <button class="sidebar-menu-item admin-menu-item" style="display: none;" onclick="showAddCategory()">
+                <button class="sidebar-menu-item" onclick="showAddCategoryModal(); closeSidebar();">
                     <i class="fas fa-folder-plus"></i>
                     <span>إضافة قسم</span>
                 </button>
                 
-                <button class="sidebar-menu-item admin-menu-item" style="display: none;" onclick="showAddFilter()">
+                <button class="sidebar-menu-item" onclick="showAddFilterModal(); closeSidebar();">
                     <i class="fas fa-filter"></i>
                     <span>إضافة فلتر</span>
                 </button>
                 
-                <button class="sidebar-menu-item admin-menu-item" style="display: none;" onclick="showAddScrollingAd()">
-                    <i class="fas fa-ad"></i>
+                <button class="sidebar-menu-item" onclick="showAddScrollAdModal(); closeSidebar();">
+                    <i class="fas fa-bullhorn"></i>
                     <span>إضافة إعلان متحرك</span>
                 </button>
                 
-                <button class="sidebar-menu-item admin-menu-item" style="display: none;" onclick="showAddPopupAd()">
-                    <i class="fas fa-window-maximize"></i>
+                <button class="sidebar-menu-item" onclick="showAddPopupAdModal(); closeSidebar();">
+                    <i class="fas fa-ad"></i>
                     <span>إضافة إعلان منبثق</span>
                 </button>
                 
-                <button class="sidebar-menu-item admin-menu-item" style="display: none;" onclick="showOrders()">
-                    <i class="fas fa-shopping-bag"></i>
+                <button class="sidebar-menu-item" onclick="navigateToPage('orders'); closeSidebar();">
+                    <i class="fas fa-box"></i>
                     <span>إدارة الطلبات</span>
                 </button>
                 
-                <!-- Admin Logout -->
-                <button class="sidebar-menu-item admin-menu-item" id="adminLogoutBtn" style="display: none;" onclick="logoutAdmin()">
+                <button class="sidebar-menu-item" onclick="adminLogout(); closeSidebar();">
                     <i class="fas fa-sign-out-alt"></i>
                     <span>تسجيل خروج</span>
                 </button>
             </div>
-        </div>
-    </div>
+            
+            <!-- Login Button -->
+            <div class="sidebar-menu-divider" id="loginDivider"></div>
+            
+            <button class="sidebar-menu-item" id="adminLoginBtn" onclick="showAdminLoginModal(); closeSidebar();">
+                <i class="fas fa-user-shield"></i>
+                <span>تسجيل دخول المدير</span>
+            </button>
+        </nav>
+    </aside>
     
-    <!-- Sidebar Overlay -->
-    <div class="sidebar-overlay" id="sidebarOverlay"></div>
-
     <!-- Main Content -->
     <main class="main-content">
-        <!-- Home Page -->
-        <div class="page active" id="homePage">
-            <!-- Categories Section -->
-            <section class="categories-section">
-                <div class="container">
+        <div class="container">
+            
+            <!-- Home Page -->
+            <div class="page active" id="homePage">
+                
+                <!-- Categories Section -->
+                <section class="categories-section">
+                    <div class="category-btns" id="categoryButtons">
+                        <!-- Category buttons will be inserted here by JavaScript -->
+                    </div>
+                </section>
+                
+                <!-- Scrolling Ad Banner -->
+                <section class="ad-banner" id="adBanner">
+                    <!-- Ad image will be inserted here -->
+                </section>
+                
+                <!-- Search Bar (Mobile) -->
+                <section class="mobile-search-section">
+                    <div class="mobile-search-bar">
+                        <button class="search-icon-btn">
+                            <i class="fas fa-search"></i>
+                        </button>
+                        <input type="text" class="mobile-search-input" placeholder="ابحث عن منتج..." onkeyup="searchProducts()">
+                    </div>
+                </section>
+                
+                <!-- Filters Section -->
+                <section class="filters-section">
+                    <div class="filter-btns" id="filterButtons">
+                        <!-- Filter buttons will be inserted here by JavaScript -->
+                    </div>
+                </section>
+                
+                <!-- Products Section -->
+                <section class="products-section">
                     <div class="section-header">
                         <h2 class="section-title">
-                            <i class="fas fa-th-large"></i>
-                            الأقسام
+                            <i class="fas fa-shopping-bag"></i>
+                            <span id="sectionTitleText">منتجاتنا</span>
                         </h2>
+                        <button class="view-all-btn" id="viewAllBtn">
+                            <span>عرض الكل</span>
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
                     </div>
-                    <div class="category-btns" id="categoryBtns"></div>
-                </div>
-            </section>
-
-            <!-- Filters Section -->
-            <section class="filters-section">
-                <div class="container">
-                    <div class="filter-btns" id="filterBtns"></div>
-                </div>
-            </section>
-
-            <!-- Products Section -->
-            <section class="products-section">
-                <div class="container">
-                    <div class="products-grid" id="productsGrid"></div>
-                </div>
-            </section>
-        </div>
-
-        <!-- Cart Page -->
-        <div class="page" id="cartPage">
-            <section class="cart-section">
-                <div class="container">
-                    <div class="page-header">
-                        <h2 class="page-title">
-                            <i class="fas fa-shopping-cart"></i>
-                            سلة التسوق
-                        </h2>
+                    
+                    <div class="products-grid" id="productsGrid">
+                        <!-- Products will be inserted here by JavaScript -->
                     </div>
-                    <div id="cartContainer"></div>
-                </div>
-            </section>
-        </div>
-
-        <!-- Wishlist Page -->
-        <div class="page" id="wishlistPage">
-            <section class="wishlist-section">
-                <div class="container">
-                    <div class="page-header">
-                        <h2 class="page-title">
-                            <i class="fas fa-heart"></i>
-                            المفضلة
-                        </h2>
+                    
+                    <!-- Empty State -->
+                    <div class="empty-state" id="emptyState" style="display: none;">
+                        <i class="fas fa-box-open"></i>
+                        <p>لا توجد منتجات</p>
+                        <button class="btn-primary" onclick="filterProducts('all')">
+                            <i class="fas fa-refresh"></i>
+                            <span>عرض جميع المنتجات</span>
+                        </button>
                     </div>
-                    <div id="wishlistContainer"></div>
+                </section>
+            </div>
+            
+            <!-- Cart Page -->
+            <div class="page" id="cartPage">
+                <div class="page-header">
+                    <h1 class="page-title">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>سلة التسوق</span>
+                    </h1>
                 </div>
-            </section>
-        </div>
-
-        <!-- Notifications Page -->
-        <div class="page" id="notificationsPage">
-            <section class="notifications-section">
-                <div class="container">
-                    <div class="page-header">
-                        <h2 class="page-title">
-                            <i class="fas fa-bell"></i>
-                            الإشعارات
-                        </h2>
+                
+                <section class="cart-section">
+                    <div class="cart-items" id="cartItems">
+                        <!-- Cart items will be inserted here -->
                     </div>
+                    
+                    <div class="cart-summary" id="cartSummary" style="display: none;">
+                        <h3>ملخص الطلب</h3>
+                        <div class="cart-summary-row">
+                            <span>المجموع الفرعي:</span>
+                            <span id="cartSubtotal">0 د.ع</span>
+                        </div>
+                        <div class="cart-summary-row">
+                            <span>رسوم التوصيل:</span>
+                            <span class="text-success">مجاني</span>
+                        </div>
+                        <div class="cart-summary-total">
+                            <span>الإجمالي:</span>
+                            <span id="cartTotal">0 د.ع</span>
+                        </div>
+                        <button class="btn-primary btn-block" onclick="showCheckoutModal()">
+                            <i class="fas fa-check-circle"></i>
+                            <span>إتمام الطلب</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Empty Cart State -->
+                    <div class="empty-state" id="emptyCartState">
+                        <i class="fas fa-shopping-cart"></i>
+                        <p>سلة التسوق فارغة</p>
+                        <button class="btn-primary" onclick="navigateToPage('home')">
+                            <i class="fas fa-shopping-bag"></i>
+                            <span>تصفح المنتجات</span>
+                        </button>
+                    </div>
+                </section>
+            </div>
+            
+            <!-- Wishlist Page -->
+            <div class="page" id="wishlistPage">
+                <div class="page-header">
+                    <h1 class="page-title">
+                        <i class="fas fa-heart"></i>
+                        <span>المفضلة</span>
+                    </h1>
+                </div>
+                
+                <section class="wishlist-section">
+                    <div class="products-grid" id="wishlistGrid">
+                        <!-- Wishlist items will be inserted here -->
+                    </div>
+                    
+                    <!-- Empty Wishlist State -->
+                    <div class="empty-state" id="emptyWishlistState">
+                        <i class="fas fa-heart-broken"></i>
+                        <p>لا توجد منتجات في المفضلة</p>
+                        <button class="btn-primary" onclick="navigateToPage('home')">
+                            <i class="fas fa-shopping-bag"></i>
+                            <span>تصفح المنتجات</span>
+                        </button>
+                    </div>
+                </section>
+            </div>
+            
+            <!-- Notifications Page -->
+            <div class="page" id="notificationsPage">
+                <div class="page-header">
+                    <h1 class="page-title">
+                        <i class="fas fa-bell"></i>
+                        <span>الإشعارات</span>
+                    </h1>
+                </div>
+                
+                <section class="notifications-section">
                     <div class="notifications-list">
                         <div class="notification-item unread">
                             <div class="notification-icon new">
-                                <i class="fas fa-sparkles"></i>
+                                <i class="fas fa-tag"></i>
                             </div>
                             <div class="notification-content">
-                                <h4>منتجات جديدة!</h4>
-                                <p>تم إضافة مجموعة جديدة من الفساتين الصيفية</p>
+                                <h4>عرض خاص!</h4>
+                                <p>خصم 50% على جميع منتجات الملابس النسائية. العرض ساري حتى نهاية الأسبوع!</p>
                                 <span class="notification-time">منذ ساعتين</span>
                             </div>
                         </div>
                         
                         <div class="notification-item">
                             <div class="notification-icon sale">
-                                <i class="fas fa-tags"></i>
+                                <i class="fas fa-percent"></i>
                             </div>
                             <div class="notification-content">
-                                <h4>عرض خاص!</h4>
-                                <p>خصم 40% على جميع المنتجات - لفترة محدودة</p>
-                                <span class="notification-time">منذ 5 ساعات</span>
+                                <h4>تخفيضات الموسم</h4>
+                                <p>تخفيضات تصل إلى 70% على مختارات من الملابس الرجالية والإكسسوارات.</p>
+                                <span class="notification-time">منذ يوم</span>
                             </div>
                         </div>
                         
@@ -281,59 +359,62 @@
                             </div>
                             <div class="notification-content">
                                 <h4>توصيل مجاني</h4>
-                                <p>توصيل مجاني لجميع الطلبات فوق 100,000 دينار</p>
-                                <span class="notification-time">منذ يوم</span>
+                                <p>احصل على توصيل مجاني لجميع الطلبات فوق 100,000 د.ع</p>
+                                <span class="notification-time">منذ 3 أيام</span>
                             </div>
                         </div>
                     </div>
+                </section>
+            </div>
+            
+            <!-- Orders Page (Admin) -->
+            <div class="page" id="ordersPage">
+                <div class="page-header">
+                    <h1 class="page-title">
+                        <i class="fas fa-box"></i>
+                        <span>إدارة الطلبات</span>
+                    </h1>
                 </div>
-            </section>
-        </div>
-
-        <!-- Orders Page (Admin) -->
-        <div class="page" id="ordersPage">
-            <section class="orders-section">
-                <div class="container">
-                    <div class="page-header">
-                        <h2 class="page-title">
-                            <i class="fas fa-shopping-bag"></i>
-                            إدارة الطلبات
-                        </h2>
-                    </div>
-                    <div id="ordersContainer"></div>
-                </div>
-            </section>
-        </div>
-
-        <!-- About Page -->
-        <div class="page" id="aboutPage">
-            <section class="about-section">
-                <div class="container">
-                    <div class="page-header">
-                        <h2 class="page-title">
-                            <i class="fas fa-info-circle"></i>
-                            عن LaVish Center
-                        </h2>
+                
+                <section class="orders-section">
+                    <div id="ordersContainer">
+                        <!-- Orders will be inserted here -->
                     </div>
                     
+                    <!-- Empty Orders State -->
+                    <div class="empty-state" id="emptyOrdersState">
+                        <i class="fas fa-box"></i>
+                        <p>لا توجد طلبات حتى الآن</p>
+                    </div>
+                </section>
+            </div>
+            
+            <!-- About Page -->
+            <div class="page" id="aboutPage">
+                <div class="page-header">
+                    <h1 class="page-title">
+                        <i class="fas fa-info-circle"></i>
+                        <span>من نحن</span>
+                    </h1>
+                </div>
+                
+                <section class="about-section">
                     <div class="about-content">
-                        <p>مرحباً بكم في <strong>LaVish Center</strong> - وجهتكم المثالية للأزياء والإكسسوارات الفاخرة!</p>
+                        <h2>مرحباً بك في LaVish Center 💎</h2>
+                        <p>نحن متجر إلكتروني رائد في مجال الموضة والأزياء، نقدم لك مجموعة واسعة من المنتجات عالية الجودة بأسعار تنافسية.</p>
                         
-                        <p>نحن متخصصون في تقديم أرقى المنتجات من الملابس النسائية والرجالية والأطفال، بالإضافة إلى مجموعة واسعة من الإكسسوارات والأحذية والحقائب والفضيات.</p>
-                        
-                        <p><strong>لماذا تختار LaVish Center؟</strong></p>
+                        <h3>لماذا تختار LaVish؟</h3>
                         <ul>
-                            <li>✨ منتجات عالية الجودة</li>
-                            <li>🚚 توصيل سريع ومجاني للطلبات فوق 100,000 دينار</li>
-                            <li>💳 طرق دفع آمنة ومتعددة</li>
-                            <li>🎁 عروض وخصومات حصرية</li>
-                            <li>📱 تطبيق سهل الاستخدام</li>
-                            <li>🛡️ ضمان الجودة والاستبدال</li>
+                            <li>✨ جودة عالية - منتجات مختارة بعناية</li>
+                            <li>🚚 توصيل سريع - إلى جميع المحافظات</li>
+                            <li>💰 أسعار منافسة - عروض وتخفيضات مستمرة</li>
+                            <li>🔒 دفع آمن - حماية كاملة لمعلوماتك</li>
+                            <li>🎁 هدايا مجانية - مع كل طلب</li>
                         </ul>
                     </div>
                     
                     <div class="about-contact">
-                        <h3><i class="fas fa-phone-alt"></i> تواصل معنا</h3>
+                        <h3><i class="fas fa-phone"></i> تواصل معنا</h3>
                         <div class="contact-info">
                             <p><i class="fas fa-phone"></i> <a href="tel:+9647801234567">+964 780 123 4567</a></p>
                             <p><i class="fas fa-envelope"></i> <a href="mailto:info@lavishcenter.iq">info@lavishcenter.iq</a></p>
@@ -341,25 +422,28 @@
                         </div>
                         
                         <div class="social-links">
-                            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
                             <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
                             <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
-                            <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            </div>
+            
         </div>
     </main>
-
-    <!-- Bottom Navigation Bar -->
+    
+    <!-- Bottom Navigation -->
     <nav class="bottom-nav">
         <button class="bottom-nav-item active" onclick="navigateToPage('home')">
-            <i class="fas fa-home"></i>
+            <div class="bottom-nav-icon-wrapper">
+                <i class="fas fa-home"></i>
+            </div>
             <span>الرئيسية</span>
         </button>
         
-        <button class="bottom-nav-item" onclick="showCart()">
+        <button class="bottom-nav-item" onclick="navigateToPage('cart')">
             <div class="bottom-nav-icon-wrapper">
                 <i class="fas fa-shopping-cart"></i>
                 <span class="bottom-nav-badge" id="bottomCartBadge" style="display: none;">0</span>
@@ -367,7 +451,7 @@
             <span>السلة</span>
         </button>
         
-        <button class="bottom-nav-item" onclick="showWishlist()">
+        <button class="bottom-nav-item" onclick="navigateToPage('wishlist')">
             <div class="bottom-nav-icon-wrapper">
                 <i class="fas fa-heart"></i>
                 <span class="bottom-nav-badge" id="bottomWishlistBadge" style="display: none;">0</span>
@@ -375,28 +459,36 @@
             <span>المفضلة</span>
         </button>
         
-        <button class="bottom-nav-item" onclick="showNotifications()">
-            <i class="fas fa-bell"></i>
+        <button class="bottom-nav-item" onclick="navigateToPage('notifications')">
+            <div class="bottom-nav-icon-wrapper">
+                <i class="fas fa-bell"></i>
+            </div>
             <span>الإشعارات</span>
         </button>
     </nav>
-
+    
     <!-- Scroll to Top Button -->
     <button class="scroll-top-btn" id="scrollTopBtn" onclick="scrollToTop()">
         <i class="fas fa-arrow-up"></i>
     </button>
-
+    
     <!-- Install PWA Button -->
-    <button class="install-btn" id="installBtn" style="display: none;" onclick="installPWA()">
+    <button class="install-btn" id="installBtn" style="display: none;">
         <i class="fas fa-download"></i>
         <span>تثبيت التطبيق</span>
     </button>
-
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     
-    <!-- App Script -->
-    <script src="app-full.js"></script>
+    <!-- Product Details Modal (will be inserted by JavaScript) -->
+    <div id="productModal"></div>
+    
+    <!-- Popup Ad (will be inserted by JavaScript) -->
+    <div id="popupAd"></div>
+    
+    <!-- Admin Modals (will be inserted by JavaScript) -->
+    <div id="adminModals"></div>
+    
+    <!-- Scripts -->
+    <script src="app.js"></script>
+    
 </body>
 </html>
