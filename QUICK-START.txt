@@ -1,0 +1,37 @@
+═══════════════════════════════════════════════════════════
+    🚀 LaVish Center - QUICK START GUIDE
+═══════════════════════════════════════════════════════════
+
+WHAT'S NEW:
+✅ Categories in sidebar
+✅ Colors, sizes, stock for products
+✅ Enhanced admin panel
+✅ Bottom navigation bar
+✅ Full cart page with selections
+✅ Full wishlist page
+✅ Orders management
+✅ Fully responsive design
+
+FILES UPDATED:
+• index.html
+• app.js
+• style.css
+• admin-styles.css
+
+INSTALLATION:
+1. Delete old files
+2. Upload new files
+3. Press Ctrl+F5 in browser
+
+ADMIN LOGIN:
+Username: admin
+Password: admin
+
+FEATURES:
+• Add products with colors/sizes/stock
+• View all orders from users
+• Confirm orders (mark as completed)
+• Bottom navigation (Home, Wishlist, Cart, Notifications)
+• Works on all devices
+
+═══════════════════════════════════════════════════════════
